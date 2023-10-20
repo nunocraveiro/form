@@ -1,5 +1,6 @@
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
+import buildSchema from '../buildSchema';
 import SeatPicker from './SeatPicker';
 import './FormStep.css';
 
@@ -29,8 +30,7 @@ const MyTextInput = ({label, ...props}) => {
   );
 };
 
-// Ideal solution with the food input as a select:
-/* const MySelect = ({ label, ...props }) => {
+const MySelect = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (
     <div className='super_container'>
@@ -43,49 +43,9 @@ const MyTextInput = ({label, ...props}) => {
       </div>
     </div>
   );
-}; */
+};
 
-const buildSchema = (fields) => {
-  const schemaObj = {};
-  fields.forEach(field => {
-    if (field === 'firstName' || field === 'lastName') {
-      const fieldWord = field.split('N')[0];
-      const fieldName = `${fieldWord.charAt(0).toUpperCase()}${fieldWord.slice(1)} name`;
-      schemaObj[field] = Yup.string()
-        .matches(/^[a-zA-Z]*$/, `${fieldName} should not contain numbers`)
-        .required(`${fieldName} is a required field`)
-    }
-    if (field === 'age') {
-      schemaObj[field] = Yup.string()
-        .matches(/^\d*[1-9]\d*$/, 'Age should be positive')
-        .required('Age must be a number')
-    }
-    if (field === 'email') {
-      schemaObj[field] = Yup.string()
-        .email('Email should have correct format')
-        .required('Email is a required field')
-    }
-    if (field === 'phone') {
-      schemaObj[field] = Yup.string()
-        .matches(/^[0-9+\s]*$/, 'Phone number should not contain letters')
-        .required('Phone number is a required field')
-    }
-    if (field === 'seat') {
-      schemaObj[field] = Yup.string()
-        .matches(/^[0-9]{1,2}[a-zA-Z]$/, 'Seat should have correct format')
-        .required('Seat is a required field')
-    }
-    if (field === 'food' || field === 'allergies') {
-      const fieldName = field.charAt(0).toUpperCase()+field.slice(1);
-      schemaObj[field] = Yup.string()
-        .matches(/^[a-zA-Z,\s]*$/, `${fieldName} should have correct format`)
-        .required(`${fieldName} is a required field`)
-    }
-  })
-  return schemaObj;
-}
-
-const FormStep = ({step, setStep, fields, formValues, setFormValues, temp, setTemp, navigate}) => {
+const FormStep = ({step, setStep, fields, formValues, setFormValues, temp, setTemp}) => {
   return (
     <>
     <Formik
@@ -96,7 +56,6 @@ const FormStep = ({step, setStep, fields, formValues, setFormValues, temp, setTe
       onSubmit={(values, { setSubmitting }) => {
         setFormValues({...formValues, ...values});
         setStep(step+1);
-        navigate(`/step${step+2}`);
         setSubmitting(false);
       }}
     >
@@ -105,19 +64,18 @@ const FormStep = ({step, setStep, fields, formValues, setFormValues, temp, setTe
           {step === 2 ? <SeatPicker temp={temp} setTemp={setTemp}/> : <></>}
           <div className='fields'>
             {fields.map(field => {
-              // Ideal solution with the food input as a select:
-              /* if (field === 'food') {
+              if (field === 'food') {
                 return (
-                  <MySelect label={field} name={field} onChange={e => setTemp({...temp, ...{tempFood: e.target.value}})}>
-                    <option value="">select</option>
+                  <MySelect label={field} name={field} onChange={e => setTemp({...temp, ...{[field]: e.target.value}})}>
+                    <option value="" selected disabled hidden>select</option>
                     <option value="no restrictions">no restrictions</option>
                     <option value="vegan">vegan</option>
                     <option value="vegetarian">vegetarian</option>
                     <option value="gluten-free">gluten-free</option>
                   </MySelect>
                 )
-              } */
-              if (field === 'seat' || field === 'food' || field === 'allergies') {
+              }
+              if (field === 'seat' || field === 'allergies') {
                 return (
                   <MyTextInput
                     key={field}
@@ -147,7 +105,7 @@ const FormStep = ({step, setStep, fields, formValues, setFormValues, temp, setTe
               className='button' 
               type='button' 
               data-testid="back" 
-              onClick={() => {setStep(step-1); navigate(`/step${step}`);}}>
+              onClick={() => setStep(step-1)}>
                 Back
             </button>
           }

@@ -1,6 +1,6 @@
 import './Review.css';
 
-const Results = ({formValues, step, setStep, navigate}) => {
+const Results = ({formValues, step, setStep}) => {
     return (
         <div className='results'>
             {Object.keys(formValues).map(key => 
@@ -16,7 +16,7 @@ const Results = ({formValues, step, setStep, navigate}) => {
                 className='button' 
                 type='button' 
                 data-testid="back" 
-                onClick={() => {setStep(step-1); navigate(`/step${step}`);}}>
+                onClick={() => setStep(step-1)}>
                     Back
             </button>
         </div>

@@ -58,8 +58,7 @@ label {
     opacity: 0.9;
 }
 
-/* CSS for the food input as a select: */
-/* .select {
+.select {
     width: 100%;
     border: none;
     padding: 0;
@@ -73,7 +72,7 @@ label {
 }
 option {
     font-size: 0.8rem;
-} */
+}
 
 .buttons {
     display: flex;

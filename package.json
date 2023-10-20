@@ -2,12 +2,12 @@
     "name": "multi-step-form",
     "version": "1.0.0",
     "scripts": {
-      "dev": "cd app-frontend && npm run dev",
-      "build": "cd app-frontend && npm install && npm run build",
-      "start": "cd app-frontend && npm run dev",
-      "test": "cypress run"
+        "dev": "cd app-frontend && npm run dev",
+        "build": "cd app-frontend && npm install && npm run build",
+        "start": "cd app-frontend && npm run dev",
+        "test": "cypress run"
     },
     "devDependencies": {
-      "cypress": "^12.17.1"
+        "cypress": "^12.17.1"
     }
-  }
+}

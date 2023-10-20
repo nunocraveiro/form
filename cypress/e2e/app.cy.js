@@ -24,7 +24,7 @@ describe('Frontend Test Spec', () => {
     const food = "vegan"
     const allergies = "peanuts, soy, gluten"
     cy.get('[data-testid=seat]').type(seat)
-    cy.get('[data-testid=food]').type(food)
+    cy.get('[data-testid=food]').select(food)
     cy.get('[data-testid=allergies]').type(allergies)
     cy.get('[data-testid=submit]').click()
 
@@ -40,7 +40,7 @@ describe('Frontend Test Spec', () => {
 
   })
 
-  it('It is possible to nagivate back and all data is preserved', () => {
+  it('It is possible to navigate back and all data is preserved', () => {
     cy.visit('/')
 
     // Complete step 1
@@ -64,7 +64,7 @@ describe('Frontend Test Spec', () => {
     const food = "vegan"
     const allergies = "peanuts, soy, gluten"
     cy.get('[data-testid=seat]').type(seat)
-    cy.get('[data-testid=food]').type(food)
+    cy.get('[data-testid=food]').select(food)
     cy.get('[data-testid=allergies]').type(allergies)
     cy.get('[data-testid=submit]').click()
 
@@ -105,27 +105,35 @@ describe('Frontend Test Spec', () => {
 
     cy.get('form').should('contain.text', "First name is a required field")
     cy.get('form').should('contain.text', "Last name is a required field")
-    cy.get('form').should('contain.text', "Age must be a number")
+    cy.get('form').should('contain.text', "Age is a required field")
 
     // Verify that invalid values are proccessed correctly
-    const firstName = "1000"
-    const lastName = "1000"
-    const age = "-1000"
+    let firstName = "1000"
+    let lastName = "1000"
+    let age = "-1000"
     cy.get('[data-testid=firstName]').type(firstName)
     cy.get('[data-testid=lastName]').type(lastName)
     cy.get('[data-testid=age]').type(age)
     cy.get('[data-testid=submit]').click()
 
-    cy.get('form').should('contain.text', "First name should not contain numbers")
-    cy.get('form').should('contain.text', "Last name should not contain numbers")
-    cy.get('form').should('contain.text', "Age should be positive")
+    cy.get('form').should('contain.text', "First name is invalid")
+    cy.get('form').should('contain.text', "Last name is invalid")
+    cy.get('form').should('contain.text', "Age is invalid")
 
     // Check Step2 validation
-    cy.visit('/step2')
+    firstName = "Bob"
+    lastName = "Bobson"
+    age = 30
+    cy.get('[data-testid=firstName]').clear()
+    cy.get('[data-testid=lastName]').clear()
+    cy.get('[data-testid=age]').clear()
+    cy.get('[data-testid=firstName]').type(firstName)
+    cy.get('[data-testid=lastName]').type(lastName)
+    cy.get('[data-testid=age]').type(age)
+    cy.get('[data-testid=submit]').click()
 
     // Verify required validation
     cy.get('[data-testid=submit]').click()
-
     cy.get('form').should('contain.text', "Email is a required field")
     cy.get('form').should('contain.text', "Phone number is a required field")
 
