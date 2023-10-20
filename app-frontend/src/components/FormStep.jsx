@@ -2,6 +2,7 @@ import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import buildSchema from '../buildSchema';
 import SeatPicker from './SeatPicker';
+import Buttons from './Buttons';
 import './FormStep.css';
 
 const placeholders = {
@@ -10,7 +11,7 @@ const placeholders = {
   age: '25',
   phone: '+1 2345678', 
   email: 'janedoe@gmail.com',
-  seat: 'A5',
+  seat: '5A',
   food: 'vegan',
   allergies: 'peanuts, soy'
 };
@@ -66,12 +67,16 @@ const FormStep = ({step, setStep, fields, formValues, setFormValues, temp, setTe
             {fields.map(field => {
               if (field === 'food') {
                 return (
-                  <MySelect label={field} name={field} onChange={e => setTemp({...temp, ...{[field]: e.target.value}})}>
-                    <option value="" selected disabled hidden>select</option>
-                    <option value="no restrictions">no restrictions</option>
-                    <option value="vegan">vegan</option>
-                    <option value="vegetarian">vegetarian</option>
-                    <option value="gluten-free">gluten-free</option>
+                  <MySelect 
+                    label={field} 
+                    name={field} 
+                    key={field} 
+                    onChange={e => setTemp({...temp, ...{[field]: e.target.value}})}>
+                      <option value="" disabled hidden>select</option>
+                      <option value="no restrictions">no restrictions</option>
+                      <option value="vegan">vegan</option>
+                      <option value="vegetarian">vegetarian</option>
+                      <option value="gluten-free">gluten-free</option>
                   </MySelect>
                 )
               }
@@ -99,23 +104,7 @@ const FormStep = ({step, setStep, fields, formValues, setFormValues, temp, setTe
             })}
           </div>
         </div>
-        <div className='buttons'>
-          {step === 0 ? <></> : 
-            <button 
-              className='button' 
-              type='button' 
-              data-testid="back" 
-              onClick={() => setStep(step-1)}>
-                Back
-            </button>
-          }
-          <button 
-            className='button submit' 
-            type="submit" 
-            data-testid="submit">
-              {step === 2 ? 'Submit' : 'Next'}
-          </button>
-        </div>
+        <Buttons step={step} setStep={setStep}/>
       </Form>
     </Formik>
     </>

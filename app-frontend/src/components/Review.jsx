@@ -1,6 +1,7 @@
+import Buttons from './Buttons';
 import './Review.css';
 
-const Results = ({formValues, step, setStep}) => {
+const Review = ({formValues, step, setStep}) => {
     return (
         <div className='results'>
             {Object.keys(formValues).map(key => 
@@ -12,15 +13,9 @@ const Results = ({formValues, step, setStep}) => {
                     <div data-testid={key}>{`${formValues[key]}`}</div>
                 </div>
             )}
-            <button 
-                className='button' 
-                type='button' 
-                data-testid="back" 
-                onClick={() => setStep(step-1)}>
-                    Back
-            </button>
+            <Buttons step={step} setStep={setStep}/>
         </div>
     )
 }
 
-export default Results;
+export default Review;
