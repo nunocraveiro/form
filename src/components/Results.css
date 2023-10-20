@@ -1,0 +1,26 @@
+.results {
+    width: 30rem;
+    height: 22rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 0.5rem;
+    font-size: 1rem;
+}
+
+.button {
+    margin-top: 1.5rem;
+}
+
+.results p {
+    font-weight: 100;
+    margin-right: 0.7rem;
+}
+
+.resultsRow {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 0.1px solid rgb(240, 240, 240);
+    padding-bottom: 0.4rem;
+    padding-top: 0.3rem;
+}

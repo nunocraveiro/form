@@ -1,0 +1,41 @@
+.seat_picker {
+    font-size: 0.8rem;
+    padding-top: 3.5rem;
+    margin-right: 1.8rem;
+    user-select: none;
+}
+
+.picker_text {
+    margin-bottom: 0.1rem;
+    font-weight: 200;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.row div {
+    width: 2rem;
+    height: 2rem;
+    border: 0.1px solid rgb(240, 240, 240);
+    margin: 0.1rem;
+    padding-left: 0.8rem;
+    padding-top: 1rem;
+    cursor: pointer;
+}
+
+.row div:hover {
+    color: #151515;
+    background-color: rgb(240, 240, 240);
+}
+
+.row p {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.chosen {
+    color: #151515;
+    background-color: rgb(240, 240, 240);
+}
